@@ -162,6 +162,15 @@ export default function AdminPage() {
       </section>
 
       <section className="mb-8">
+        <h2 className="font-semibold mb-2">Hostel Management</h2>
+        <div className="mb-4">
+          <Link href="/admin/hostel" className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            Manage Hostel Tickets →
+          </Link>
+        </div>
+      </section>
+
+      <section className="mb-8">
         <h2 className="font-semibold mb-2">Products ({products.length})</h2>
         <div className="grid gap-4">
           {products.map((p) => (
@@ -188,10 +197,14 @@ export default function AdminPage() {
         <h2 className="font-semibold mb-2">Events ({events.length})</h2>
         <div className="grid gap-4">
           {events.map((ev) => (
-            <div key={ev._id} className="p-4 border rounded flex justify-between items-center">
-              <div>
+            <div key={ev._id} className="p-4 border rounded flex items-center gap-4">
+              <div className="w-24 h-24 bg-gray-200 overflow-hidden flex-shrink-0 rounded">
+                <img src={(ev as any).image || '/placeholder.svg?height=96&width=96&query=event'} alt={ev.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="flex-1">
                 <div className="font-medium">{ev.title}</div>
                 <div className="text-sm text-gray-600">{new Date(ev.startDate).toLocaleString()}</div>
+                <div className="text-sm text-gray-500 truncate">{(ev as any).description || ''}</div>
               </div>
               <div>
                 <button onClick={() => del('/api/admin/events', ev._id)} className="text-red-600">
@@ -207,10 +220,14 @@ export default function AdminPage() {
         <h2 className="font-semibold mb-2">Clubs ({clubs.length})</h2>
         <div className="grid gap-4">
           {clubs.map((c) => (
-            <div key={c._id} className="p-4 border rounded flex justify-between items-center">
-              <div>
+            <div key={c._id} className="p-4 border rounded flex items-center gap-4">
+              <div className="w-24 h-24 bg-gray-200 overflow-hidden flex-shrink-0 rounded">
+                <img src={(c as any).image || '/placeholder.svg?height=96&width=96&query=club'} alt={c.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="flex-1">
                 <div className="font-medium">{c.name}</div>
                 <div className="text-sm text-gray-500">President: {c.president?.name || '-'}</div>
+                <div className="text-sm text-gray-600 truncate">{(c as any).description || ''}</div>
               </div>
               <div>
                 <button onClick={() => del('/api/admin/clubs', c._id)} className="text-red-600">

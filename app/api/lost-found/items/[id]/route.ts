@@ -6,7 +6,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   try {
     await connectDB()
 
-    const item = await LostFoundItem.findById(params.id).populate("reporter", "name rollNumber")
+  const item = await LostFoundItem.findById(params.id).populate("reporter", "name rollNumber email")
 
     if (!item) {
       return NextResponse.json({ message: "Item not found" }, { status: 404 })

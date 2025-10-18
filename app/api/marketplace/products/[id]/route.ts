@@ -6,7 +6,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   try {
     await connectDB()
 
-    const product = await Product.findById(params.id).populate("seller", "name rollNumber")
+  const product = await Product.findById(params.id).populate("seller", "name rollNumber email")
 
     if (!product) {
       return NextResponse.json({ message: "Product not found" }, { status: 404 })

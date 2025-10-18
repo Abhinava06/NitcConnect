@@ -15,6 +15,19 @@ interface User {
 }
 
 export default function DashboardPage() {
+  const [showHallModal, setShowHallModal] = useState(false);
+  // Hall venues data
+  const hallVenues = [
+    { name: "Vivekananda Auditorium", category: "Main Auditorium", location: "South Campus", use: "Major Institutional Ceremonies (Convocation, Foundation Day), large-scale conferences, and the flagship events of student fests (Ragam/Tathva).", capacity: "~1000+ seats (Large Auditorium)" },
+    { name: "Open Air Theatre (OAT)", category: "Amphitheatre/Venue", location: "Central Campus (Near Academic Complex)", use: "Large student gatherings, evening cultural events, and live Pro-Shows during fests.", capacity: "Large crowd capacity (Open-air venue)" },
+    { name: "Chaitanya Auditorium", category: "Multipurpose Hall", location: "Central Campus (Near Main Building)", use: "Institutional functions, banquets (e.g., Sadhyas), and larger academic examinations.", capacity: "Medium-to-Large (Used for dining of ~324+ in new proposals)" },
+    { name: "Chanakya Hall", category: "Ceremonial/Meeting Hall", location: "Academic Complex", use: "Used for high-level administrative meetings, institutional inaugurations, and small ceremonies.", capacity: "Medium (Standard Hall)" },
+    { name: "Guest House Conference Hall", category: "Conference Room", location: "\"Atithi\" Guest House (West Campus)", use: "Official meetings, workshops, and high-level training programs.", capacity: "Up to 50 people" },
+    { name: "Department Seminar Halls", category: "Seminar Hall", location: "Located in ECED, MED, etc.", use: "Departmental research presentations, PhD defenses, guest lectures, and student association events.", capacity: "Typically 70–100 seats" },
+    { name: "Department Conference Rooms", category: "Conference Room", location: "Located in ECE, Career Dev. Centres, etc.", use: "Internal committee meetings, small official discussions.", capacity: "Typically 20–30 people (e.g., ECE has a 20-person room)" },
+    { name: "New Academic Block", category: "Lecture Halls / Classrooms", location: "New Construction", use: "Modern, smart classrooms and lecture halls with updated A/V facilities.", capacity: "Varies (Lecture Halls have high seating capacity)" },
+    { name: "Central Computer Centre (CCC)", category: "IT/Exam Center", location: "Central Computer Centre Building", use: "High-performance computing, lab sessions, and large-scale online placement tests/exams.", capacity: "~190+ client machines (for computing/exams)" }
+  ];
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -86,7 +99,7 @@ export default function DashboardPage() {
       href: "/appointments",
       description: "Schedule meetings",
     },
-    { icon: <Building2 className="w-6 h-6" />, title: "Hall Booking", href: "/halls", description: "Reserve halls" },
+  { icon: <Building2 className="w-6 h-6" />, title: "Hall Booking", description: "Reserve halls" },
     {
       icon: <Calendar className="w-6 h-6 text-blue-600" />,
       title: "Placement Analytics",
@@ -162,24 +175,82 @@ export default function DashboardPage() {
         {/* Modules Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((module) => (
-            <Link key={module.href} href={module.href}>
-              <Card
-                className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
-              >
-                <div className="flex items-start gap-4">
-                  <div className={`p-3 rounded-lg ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"}`}>
-                    {module.icon}
+            module.title === "Hall Booking" ? (
+              <div key={module.title} className="cursor-pointer" onClick={() => setShowHallModal(true)}>
+                <Card
+                  className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-blue-100 text-blue-600">
+                      {module.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
+                      <p className="text-sm text-gray-600">{module.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
-                    <p className="text-sm text-gray-600">{module.description}</p>
-                  </div>
+                </Card>
+              </div>
+            ) : (
+              module.href ? (
+                <Link key={module.href} href={module.href}>
+                  <Card
+                    className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-lg ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"}`}>
+                        {module.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
+                        <p className="text-sm text-gray-600">{module.description}</p>
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
+              ) : (
+                <div key={module.title}>
+                  <Card
+                    className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-lg ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"}`}>
+                        {module.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
+                        <p className="text-sm text-gray-600">{module.description}</p>
+                      </div>
+                    </div>
+                  </Card>
                 </div>
-              </Card>
-            </Link>
+              )
+            )
           ))}
         </div>
       </section>
+      {showHallModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full overflow-y-auto max-h-[80vh]">
+            <h2 className="text-2xl font-bold mb-6 text-blue-700">Hall Booking Venues</h2>
+            <div className="grid gap-6">
+              {hallVenues.map(venue => (
+                <Card key={venue.name} className="p-6 flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold mb-2 text-blue-800">{venue.name}</h3>
+                    <p className="mb-1"><span className="font-semibold">Category:</span> {venue.category}</p>
+                    <p className="mb-1"><span className="font-semibold">Location:</span> {venue.location}</p>
+                    <p className="mb-1"><span className="font-semibold">Primary Use:</span> {venue.use}</p>
+                    <p className="mb-1"><span className="font-semibold">Capacity:</span> {venue.capacity}</p>
+                  </div>
+                  <Button className="bg-blue-600 text-white px-6 py-2 rounded">Book</Button>
+                </Card>
+              ))}
+            </div>
+            <Button className="bg-blue-600 text-white mt-6" onClick={() => setShowHallModal(false)}>Close</Button>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

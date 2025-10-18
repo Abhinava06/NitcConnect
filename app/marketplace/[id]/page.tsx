@@ -18,6 +18,7 @@ interface Product {
     _id: string
     name: string
     rollNumber: string
+    email?: string
   }
   createdAt: string
 }
@@ -147,11 +148,13 @@ export default function ProductDetailPage() {
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Contact Seller
-                  </Button>
-                  
+                  <div className="w-full flex items-center justify-center bg-blue-50 border border-blue-200 rounded px-4 py-3 text-blue-700 font-medium">
+                    {product.seller.email ? (
+                      <span>Seller Email: <a href={`mailto:${product.seller.email}`} className="underline">{product.seller.email}</a></span>
+                    ) : (
+                      <span>Email not available</span>
+                    )}
+                  </div>
                 </div>
               )}
             </Card>

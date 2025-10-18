@@ -12,7 +12,7 @@ interface HostelTicket {
   title: string
   description: string
   type: string
-  status: "pending" | "approved" | "rejected"
+  status: "pending" | "approved"
   createdAt: string
   user: {
     name: string
@@ -25,7 +25,7 @@ export default function HostelPage() {
   const [tickets, setTickets] = useState<HostelTicket[]>([])
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
-  const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "rejected">("all")
+  const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved">("all")
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,7 +71,7 @@ export default function HostelPage() {
         return "bg-yellow-100 text-yellow-700"
       case "approved":
         return "bg-green-100 text-green-700"
-      case "rejected":
+  // case "rejected": (removed)
         return "bg-red-100 text-red-700"
       default:
         return "bg-gray-100 text-gray-700"
@@ -147,7 +147,7 @@ export default function HostelPage() {
 
         {/* Filter */}
         <div className="flex gap-2 mb-6">
-          {(["all", "pending", "approved", "rejected"] as const).map((status) => (
+          {(["all", "pending", "approved"] as const).map((status) => (
             <button
               key={status}
               onClick={() => setFilterStatus(status)}
