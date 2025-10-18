@@ -110,83 +110,76 @@ export default function DashboardPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-200">
       {/* Navigation */}
-      <nav className="border-b border-blue-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="border-b border-blue-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">NC</span>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+              <span className="text-white font-bold text-xl tracking-wide">NC</span>
             </div>
-            <span className="font-bold text-xl text-gray-900">NITCConnect</span>
+            <span className="font-bold text-2xl text-gray-900 tracking-tight">NITCConnect</span>
           </div>
-
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-6">
             <div className="text-right">
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-600">{user.rollNumber}</p>
+              <p className="font-semibold text-gray-900 text-lg">{user.name}</p>
+              <p className="text-sm text-gray-500">{user.rollNumber}</p>
             </div>
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="border-blue-200 text-gray-700 hover:bg-blue-50 bg-transparent"
+              className="border-blue-200 text-gray-700 hover:bg-blue-100 bg-white shadow-sm rounded-lg px-4 py-2"
             >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              <LogOut className="w-4 h-4 mr-2" /> Logout
             </Button>
           </div>
-
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 hover:bg-blue-50 rounded-lg"
+            className="md:hidden p-2 hover:bg-blue-100 rounded-lg"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-blue-200 bg-white p-4">
+          <div className="md:hidden border-t border-blue-200 bg-white p-4 rounded-b-xl shadow">
             <div className="mb-4 pb-4 border-b border-blue-200">
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-600">{user.rollNumber}</p>
+              <p className="font-semibold text-gray-900 text-lg">{user.name}</p>
+              <p className="text-sm text-gray-500">{user.rollNumber}</p>
             </div>
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="w-full border-blue-200 text-gray-700 hover:bg-blue-50 bg-transparent"
+              className="w-full border-blue-200 text-gray-700 hover:bg-blue-100 bg-white shadow-sm rounded-lg px-4 py-2"
             >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              <LogOut className="w-4 h-4 mr-2" /> Logout
             </Button>
           </div>
         )}
       </nav>
-
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {user.name.split(" ")[0]}!</h1>
-          <p className="text-gray-600">Access all campus services in one place</p>
+        <div className="mb-12 text-center">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-3 tracking-tight drop-shadow">Welcome, {user.name.split(" ")[0]}!</h1>
+          <p className="text-lg text-gray-600">Access all campus services in one place</p>
         </div>
-
         {/* Modules Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {modules.map((module) => (
             module.title === "Hall Booking" ? (
               <div key={module.title} className="cursor-pointer" onClick={() => setShowHallModal(true)}>
                 <Card
-                  className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full`}
+                  className="p-8 border-blue-200 hover:border-blue-400 hover:shadow-2xl transition-all bg-white cursor-pointer h-full rounded-2xl shadow-md group"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-blue-100 text-blue-600">
+                  <div className="flex items-start gap-5">
+                    <div className="p-4 rounded-xl bg-blue-100 text-blue-600 group-hover:bg-blue-200 transition">
                       {module.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
-                      <p className="text-sm text-gray-600">{module.description}</p>
+                      <h3 className="font-bold text-xl text-gray-900 mb-1 group-hover:text-blue-700 transition">{module.title}</h3>
+                      <p className="text-base text-gray-600 group-hover:text-blue-600 transition">{module.description}</p>
                     </div>
                   </div>
                 </Card>
@@ -195,15 +188,15 @@ export default function DashboardPage() {
               module.href ? (
                 <Link key={module.href} href={module.href}>
                   <Card
-                    className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
+                    className={`p-8 border-blue-200 hover:border-blue-400 hover:shadow-2xl transition-all bg-white cursor-pointer h-full rounded-2xl shadow-md group ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div className={`p-3 rounded-lg ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"}`}>
+                    <div className="flex items-start gap-5">
+                      <div className={`p-4 rounded-xl ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"} group-hover:bg-blue-200 transition`}>
                         {module.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
-                        <p className="text-sm text-gray-600">{module.description}</p>
+                        <h3 className="font-bold text-xl text-gray-900 mb-1 group-hover:text-blue-700 transition">{module.title}</h3>
+                        <p className="text-base text-gray-600 group-hover:text-blue-600 transition">{module.description}</p>
                       </div>
                     </div>
                   </Card>
@@ -211,15 +204,15 @@ export default function DashboardPage() {
               ) : (
                 <div key={module.title}>
                   <Card
-                    className={`p-6 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all bg-white cursor-pointer h-full ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
+                    className={`p-8 border-blue-200 hover:border-blue-400 hover:shadow-2xl transition-all bg-white cursor-pointer h-full rounded-2xl shadow-md group ${module.title === "Placement Analytics" ? "ring-2 ring-blue-400" : ""}`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div className={`p-3 rounded-lg ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"}`}>
+                    <div className="flex items-start gap-5">
+                      <div className={`p-4 rounded-xl ${module.title === "Placement Analytics" ? "bg-blue-100 text-blue-600" : "bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600"} group-hover:bg-blue-200 transition`}>
                         {module.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-1">{module.title}</h3>
-                        <p className="text-sm text-gray-600">{module.description}</p>
+                        <h3 className="font-bold text-xl text-gray-900 mb-1 group-hover:text-blue-700 transition">{module.title}</h3>
+                        <p className="text-base text-gray-600 group-hover:text-blue-600 transition">{module.description}</p>
                       </div>
                     </div>
                   </Card>
@@ -229,25 +222,30 @@ export default function DashboardPage() {
           ))}
         </div>
       </section>
+      {/* Hall Booking Modal */}
       {showHallModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full overflow-y-auto max-h-[80vh]">
-            <h2 className="text-2xl font-bold mb-6 text-blue-700">Hall Booking Venues</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-2xl w-full overflow-y-auto max-h-[80vh] border border-blue-200 relative animate-fade-in">
+            <div className="flex items-center justify-between mb-6 border-b pb-4 border-blue-100">
+              <h2 className="text-3xl font-extrabold text-blue-700">Hall Booking Venues</h2>
+              <Button variant="ghost" className="text-gray-500 hover:text-blue-700 text-xl px-3 py-1" onClick={() => setShowHallModal(false)}>
+                <X className="w-6 h-6" />
+              </Button>
+            </div>
             <div className="grid gap-6">
               {hallVenues.map(venue => (
-                <Card key={venue.name} className="p-6 flex flex-col md:flex-row md:items-center gap-6">
+                <Card key={venue.name} className="p-6 flex flex-col md:flex-row md:items-center gap-6 rounded-xl border-blue-100 shadow group hover:shadow-lg transition">
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold mb-2 text-blue-800">{venue.name}</h3>
+                    <h3 className="text-lg font-bold mb-2 text-blue-800 group-hover:text-blue-900 transition">{venue.name}</h3>
                     <p className="mb-1"><span className="font-semibold">Category:</span> {venue.category}</p>
                     <p className="mb-1"><span className="font-semibold">Location:</span> {venue.location}</p>
                     <p className="mb-1"><span className="font-semibold">Primary Use:</span> {venue.use}</p>
                     <p className="mb-1"><span className="font-semibold">Capacity:</span> {venue.capacity}</p>
                   </div>
-                  <Button className="bg-blue-600 text-white px-6 py-2 rounded">Book</Button>
+                  <Button className="bg-blue-600 text-white px-6 py-2 rounded-xl shadow hover:bg-blue-700 transition">Book</Button>
                 </Card>
               ))}
             </div>
-            <Button className="bg-blue-600 text-white mt-6" onClick={() => setShowHallModal(false)}>Close</Button>
           </div>
         </div>
       )}
